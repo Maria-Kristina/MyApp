@@ -1,15 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
+const getThumbnail = (url) => {
+  console.log('url', url);
+  const [thumbnails, setThumbnails] = useState({});
+  async function fetchUrl() {
+    console.log('stfu');
+    const response = await fetch('http://media.mw.metropolia.fi/wbma/media/' + url);
+    const json = await response.json();
+    console.log('json', json);
+    setThumbnails(json.thumbnails);
+  }
+  useEffect(() => {
+    fetchUrl();
+  }, []);
+  return thumbnails;
+};
+
 const ListItem = (props) => {
+  const thumbnail = getThumbnail(props.singleMedia.file_id);
+  console.log('thumbnails', thumbnail);
   return (
     <TouchableOpacity style={styles.row}>
       <View style={styles.imagebox}>
-        <Image
+        {thumbnail && <Image
           style={styles.image}
-          source={{uri: props.singleMedia.thumbnails.w160}}
-        />
+          source={{uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + thumbnail.w160}}
+        />}
       </View>
       <View style={styles.textbox}>
         <Text style={styles.listTitle}> {props.singleMedia.title} </Text>

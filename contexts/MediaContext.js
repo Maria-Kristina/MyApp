@@ -14,6 +14,7 @@ const MediaProvider = (props) => {
     </MediaContext.Provider>
   );
 };
+
 MediaProvider.propTypes = {
   children: PropTypes.node,
 };
