@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   StyleSheet,
-  View,
+  SafeAreaView,
 } from 'react-native';
 import List from './components/List';
 import {MediaProvider} from './contexts/MediaContext';
@@ -9,9 +9,9 @@ import {MediaProvider} from './contexts/MediaContext';
 const App = () => {
   return (
     <MediaProvider>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <List />
-      </View>
+      </SafeAreaView>
     </MediaProvider>
   );
 };
