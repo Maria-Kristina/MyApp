@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 const getThumbnail = (url) => {
-  console.log('url', url);
   const [thumbnails, setThumbnails] = useState({});
   async function fetchUrl() {
-    console.log('stfu');
     const response = await fetch('http://media.mw.metropolia.fi/wbma/media/' + url);
     const json = await response.json();
-    console.log('json', json);
     setThumbnails(json.thumbnails);
   }
   useEffect(() => {
@@ -19,14 +16,22 @@ const getThumbnail = (url) => {
 };
 
 const ListItem = (props) => {
-  const thumbnail = getThumbnail(props.singleMedia.file_id);
-  console.log('thumbnails', thumbnail);
+  const uri = 'http://media.mw.metropolia.fi/wbma/uploads/';
+  const {navigation, singleMedia} = props;
+  const thumbnail = getThumbnail(singleMedia.file_id);
   return (
-    <TouchableOpacity style={styles.row}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={
+        () => {
+          console.log('singleMedia', singleMedia);
+          navigation.push('Single', {uri: uri, file: singleMedia});
+        }
+      }>
       <View style={styles.imagebox}>
         {thumbnail && <Image
           style={styles.image}
-          source={{uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + thumbnail.w160}}
+          source={{uri: uri + thumbnail.w160}}
         />}
       </View>
       <View style={styles.textbox}>
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    borderRadius: 16,
+    borderRadius: 100,
   },
   textbox: {
     flex: 2,
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default ListItem;

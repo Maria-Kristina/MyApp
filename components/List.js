@@ -19,13 +19,17 @@ const useFetch = (url) => {
 };
 
 const List = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const [media, loading] = useFetch('http://media.mw.metropolia.fi/wbma/media/');
-  console.log(loading);
-  console.log('media', media);
   return (
     <FlatList
       data={media}
-      renderItem={({item}) => <ListItem singleMedia={item} />}
+      renderItem={
+        ({item}) => <ListItem
+          navigation={props.navigation}
+          singleMedia={item}
+        />
+      }
       keyExtractor={(item, index) => index.toString()}
     />
   );
@@ -33,6 +37,7 @@ const List = (props) => {
 
 List.propTypes = {
   mediaArray: PropTypes.array,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default List;
