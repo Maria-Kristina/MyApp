@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 });
 
 Single.propTypes = {
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object,
 };
 
 export default Single;

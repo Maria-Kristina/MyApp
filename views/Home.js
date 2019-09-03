@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     paddingHorizontal: 10,
-    paddingTop: 40,
+    paddingTop: 30,
   },
 });
 
 Home.propTypes = {
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object,
 };
 
 export default Home;
