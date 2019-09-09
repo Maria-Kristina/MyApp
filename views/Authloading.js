@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
   View,
-  Text,
 } from 'react-native';
 
 const bootstrapAsync = async (props) => {
@@ -22,7 +20,7 @@ const bootstrapAsync = async (props) => {
   }, []);
 };
 
-const Authloading = (props) => {
+const AuthLoading = (props) => {
   bootstrapAsync(props);
   return (
     <View>
@@ -32,8 +30,4 @@ const Authloading = (props) => {
   );
 };
 
-Authloading.propTypes = {
-  navigation: PropTypes.object,
-};
-
-export default Authloading;
+export default AuthLoading;

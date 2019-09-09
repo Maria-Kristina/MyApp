@@ -1,44 +1,78 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
   Text,
   Button,
-  AsyncStorage,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import FormTextInput from '../components/FormTextInput';
+import useSignUpForm from '../hooks/LoginHooks';
+import mediaAPI from '../hooks/ApiHooks';
+
 
 const Login = (props) => {
-  const signInAsync = async (url, data) => {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    await AsyncStorage.setItem('userToken', json.token);
-    props.navigation.navigate('App');
-  };
-
+  const {
+    inputs,
+    handleUsernameChange,
+    handlePasswordChange,
+    handleEmailChange,
+    handleFullnameChange,
+  } = useSignUpForm();
+  const {signInAsync, registerAsync} = mediaAPI();
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+
       <View style={styles.form}>
+        <Text>Login</Text>
         <FormTextInput
           autoCapitalize='none'
+          value={inputs.username}
           placeholder='username'
+          onChangeText={handleUsernameChange}
         />
         <FormTextInput
           autoCapitalize='none'
+          value={inputs.password}
           placeholder='password'
+          onChangeText={handlePasswordChange}
           secureTextEntry={true}
         />
         <Button title="Sign in!" onPress={
           () => {
-            signInAsync('http://media.mw.metropolia.fi/wbma/login', userData);
+            signInAsync(inputs, props);
+          }
+        } />
+      </View>
+
+      <View style={styles.form}>
+        <Text>Register</Text>
+        <FormTextInput
+          autoCapitalize='none'
+          value={inputs.username}
+          placeholder='username'
+          onChangeText={handleUsernameChange}
+        />
+        <FormTextInput
+          autoCapitalize='none'
+          value={inputs.password}
+          placeholder='password'
+          onChangeText={handlePasswordChange}
+        />
+        <FormTextInput
+          autoCapitalize='none'
+          value={inputs.email}
+          placeholder='email'
+          onChangeText={handleEmailChange}
+        />
+        <FormTextInput
+          value={inputs.fullname}
+          placeholder='fullname'
+          onChangeText={handleFullnameChange}
+        />
+        <Button title="Register!" onPress={
+          () => {
+            registerAsync(inputs, props);
           }
         } />
       </View>
@@ -54,10 +88,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 40,
   },
+  form: {
+    width: '80%',
+  },
 });
 
 Login.propTypes = {
   navigation: PropTypes.object,
 };
+
 
 export default Login;

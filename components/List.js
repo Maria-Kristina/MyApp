@@ -1,6 +1,8 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {FlatList} from 'react-native';
+import {
+  FlatList,
+} from 'react-native';
 import ListItem from './ListItem';
 import {MediaContext} from '../contexts/MediaContext';
 
@@ -13,31 +15,29 @@ const useFetch = (url) => {
     setMedia(json);
     setLoading(false);
   };
-
-  useEffect(fetchUrl, []);
+  useEffect(() => {
+    fetchUrl();
+  }, []);
   return [media, loading];
 };
 
 const List = (props) => {
-  // eslint-disable-next-line no-unused-vars
+  const {navigation} = props;
   const [media, loading] = useFetch('http://media.mw.metropolia.fi/wbma/media/');
+  console.log(loading);
+  console.log('media', media);
   return (
     <FlatList
       data={media}
-      renderItem={
-        ({item}) => <ListItem
-          navigation={props.navigation}
-          singleMedia={item}
-        />
-      }
+      renderItem={({item}) =>
+        <ListItem navigation={navigation} singleMedia={item} />}
       keyExtractor={(item, index) => index.toString()}
     />
   );
 };
 
 List.propTypes = {
-  mediaArray: PropTypes.array,
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object,
 };
 
 export default List;
