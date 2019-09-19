@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   Button,
@@ -21,9 +20,8 @@ const Login = (props) => {
   } = useSignUpForm();
   const {signInAsync, registerAsync} = mediaAPI();
   return (
-    <View style={styles.container}>
-
-      <View style={styles.form}>
+    <View>
+      <View>
         <Text>Login</Text>
         <FormTextInput
           autoCapitalize='none'
@@ -45,7 +43,7 @@ const Login = (props) => {
         } />
       </View>
 
-      <View style={styles.form}>
+      <View>
         <Text>Register</Text>
         <FormTextInput
           autoCapitalize='none'
@@ -80,22 +78,8 @@ const Login = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  form: {
-    width: '80%',
-  },
-});
-
 Login.propTypes = {
   navigation: PropTypes.object,
 };
-
 
 export default Login;
